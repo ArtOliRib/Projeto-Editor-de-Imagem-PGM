@@ -15,8 +15,7 @@ int main(int argc, char *argv[]){
     setlocale(LC_ALL,"portuguese");
 
     char tipo [3];
-    int linha, coluna, maior;
-
+    int linha, coluna, maior, **matriz, i;
     pgm m;
 
     //abre o arquivo principal pelo CMD
@@ -25,12 +24,18 @@ int main(int argc, char *argv[]){
         //verifica se o arquivo foi aberto corretamente
         if (img == NULL)
             printf("Falha ao abrir imagem");
-            
+
         else {
             printf("Imagem pgm aberta\n");
             fscanf(img, "%s %d %d %d", &tipo, &linha, &coluna, &maior);
             printf("%s\n%d %d\n%d", tipo, linha, coluna, maior);
             printf("\n");}
+
+            matriz = malloc(coluna*sizeof(int *));
+            for(i = 0; i < coluna; i++){
+                matriz[i] = malloc(coluna*sizeof(int *));
+            }
+
 
 
     fclose(img);
@@ -53,10 +58,10 @@ int main(int argc, char *argv[]){
 //-------------------------------------------------//
 //Função para criar o arquivo mais claro
 //ESSA FUNÇÃO NÃO ESTÁ RODANDO
-void clarear(int linha, int coluna, int maior) 
+void clarear(int linha, int coluna, int maior)
     {
     printf("INICIO DA FUNÇÃO,  %d", maior);
-    
+
     pgm m;
     int i,j;
     FILE *IMG1 = fopen ("CLAREAR.pgm","a");
