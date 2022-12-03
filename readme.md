@@ -1,11 +1,3 @@
 PROJETO FINAL DE IP
 
-projeto de ip
-
-Alteração do readme
-
-Nova linha 2
-
-colocando linha no final 
-
-mais uma alteração
+atividade: passar os dados de um arquivo para uma struct e fazer diversas alterações.
