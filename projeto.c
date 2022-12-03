@@ -2,8 +2,6 @@
 #include <locale.h>
 #include <stdlib.h>
 
-\\teste github
-
 typedef struct{
     int linha;
     int coluna;
