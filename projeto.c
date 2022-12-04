@@ -42,7 +42,6 @@ int main(int argc, char *argv[]){
                 for(j=0;j<coluna;j++){
                     fscanf(img,"%i",&matriz[i][j]);
                 }
-                printf("\n");
             }
 //Alocação dinâmica para a matriz da struct
 //Quando a matriz estiver correta, passar da matriz da main para a struct
@@ -88,7 +87,7 @@ int main(int argc, char *argv[]){
 
 void clarear(pgm m)
     {
-    printf("INICIO DA FUNÇÃO,  %d", m.maior);
+    printf("TESTANDO A FUNÇÃO CLAREAR\n");
 
     int i,j;
     FILE *IMG1 = fopen ("arquivo1.pgm","w");
@@ -107,5 +106,9 @@ void clarear(pgm m)
             fprintf(IMG1,"%i ", m.matriz[i][j] + 25);
         }
     }
+    if (IMG1 == NULL)
+        printf("Falha ao criar arquivo");
+    else
+        printf("Arquivo criado com sucesso");
     fclose (IMG1);
 }
