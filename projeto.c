@@ -37,7 +37,7 @@ int main(int argc, char *argv[]){
             }
 
             for(i = 0;i<linha;i++){
-                for(j=0;i<coluna;j++){
+                for(j=0;j<coluna;j++){
                     fscanf(img,"%d ",&matriz[i][j]);
                     printf("%d ",matriz[i][j]);
                 }
@@ -49,6 +49,7 @@ int main(int argc, char *argv[]){
 m.matriz = malloc(linha*sizeof(int *));
 for (i=0; i<linha; i++){
         m.matriz[i] = malloc(coluna*sizeof(int));}
+
 
 //Liberando espaço alocado para a matriz
 for (i=0; i < linha; i++){
