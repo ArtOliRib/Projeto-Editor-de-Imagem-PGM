@@ -6,7 +6,7 @@ typedef struct{
     int linha;
     int coluna;
     int maior;
-    int matriz [100][100];
+    int **matriz;
 } pgm;
 
 //-------------------------------------------------//
@@ -44,6 +44,23 @@ int main(int argc, char *argv[]){
                 }
                 printf("\n");
             }
+//Alocação dinâmica para a matriz da struct
+//Quando a matriz estiver correta, passar da matriz da main para a struct
+        m.matriz = malloc(linha*sizeof(int *));
+        for (i=0; i<linha; i++){
+        m.matriz[i] = malloc(coluna*sizeof(int));}
+
+
+//Liberando espaço alocado para a matriz
+        for (i=0; i < linha; i++){
+        free (matriz[i]);}
+        free(matriz);
+
+//Liberando espaço alocado para a matriz da struct
+        for (i=0; i < linha; i++){
+            free (m.matriz[i]);}
+        free(m.matriz);
+
 
     fclose(img);
 
