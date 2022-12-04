@@ -16,6 +16,7 @@ int main(int argc, char *argv[]){
 
     char tipo [3];
     int linha, coluna, maior, **matriz, i,j;
+
     pgm m;
 
     //abre o arquivo principal pelo CMD
@@ -50,6 +51,10 @@ int main(int argc, char *argv[]){
         for (i=0; i<linha; i++){
         m.matriz[i] = malloc(coluna*sizeof(int));}
 
+//Passando a matriz para a struct
+    for(i = 0;i<linha;i++)
+        for(j=0;j<coluna;j++)
+            m.matriz[i][j] = matriz[i][j];
 
 //Liberando espaço alocado para a matriz
         for (i=0; i < linha; i++){
@@ -61,9 +66,9 @@ int main(int argc, char *argv[]){
             free (m.matriz[i]);}
         free(m.matriz);
 
-
     fclose(img);
 
+    //Passando os dados pra struct
     m.linha = linha;
     m.coluna = coluna;
     m.maior = maior;
@@ -107,7 +112,7 @@ void clarear(int linha, int coluna, int maior)
         }
     }
     fclose (IMG1);
-};
+}
 
 
 //------------------------------------------------//
