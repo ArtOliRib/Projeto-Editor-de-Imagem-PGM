@@ -6,7 +6,7 @@ typedef struct{
     int linha;
     int coluna;
     int maior;
-    int **matriz;
+    int matriz [100][100];
 } pgm;
 
 //-------------------------------------------------//
@@ -31,41 +31,29 @@ int main(int argc, char *argv[]){
             printf("%s\n%d %d\n%d", tipo, linha, coluna, maior);
             printf("\n");}
 
-            matriz = malloc(coluna*sizeof(int *));
-            for(i = 0; i < coluna; i++){
-                matriz[i] = malloc(linha*sizeof(int *));
+            matriz = malloc(linha*sizeof(int *));
+
+            for(i = 0; i < linha; i++){
+                matriz[i] = malloc(coluna*sizeof(int *));
             }
 
             for(i = 0;i<linha;i++){
                 for(j=0;j<coluna;j++){
-                    fscanf(img,"%d ",&matriz[i][j]);
-                    printf("%d ",matriz[i][j]);
+                    fscanf(img,"%i",&matriz[i][j]);
+                    printf("%i ",matriz[i][j]);
                 }
                 printf("\n");
             }
 
-//Alocação dinâmica para a matriz da struct
-//Quando a matriz estiver correta, passar da matriz da main para a struct
-m.matriz = malloc(linha*sizeof(int *));
-for (i=0; i<linha; i++){
-        m.matriz[i] = malloc(coluna*sizeof(int));}
-
-
-//Liberando espaço alocado para a matriz
-for (i=0; i < linha; i++){
-free (matriz[i]);}
-free(matriz);
-
-//Liberando espaço alocado para a matriz da struct
-for (i=0; i < linha; i++){
-    free (m.matriz[i]);}
-    free(m.matriz);
-
-fclose(img);
+    fclose(img);
 
     m.linha = linha;
     m.coluna = coluna;
     m.maior = maior;
+
+    //chama a função clarear e cria o primeiro arquivo
+    //FUNÇÃO NÃO ESTÁ R
+    //clarear(linha, coluna, maior);
 
     while(getchar() != '\n');
     getchar();
