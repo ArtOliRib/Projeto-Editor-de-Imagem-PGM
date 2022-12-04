@@ -41,7 +41,6 @@ int main(int argc, char *argv[]){
             for(i = 0;i<linha;i++){
                 for(j=0;j<coluna;j++){
                     fscanf(img,"%i",&matriz[i][j]);
-                    printf("%i ",matriz[i][j]);
                 }
                 printf("\n");
             }
@@ -56,6 +55,17 @@ int main(int argc, char *argv[]){
         for(j=0;j<coluna;j++)
             m.matriz[i][j] = matriz[i][j];
 
+    fclose(img);
+
+    //Passando os dados pra struct
+    m.linha = linha;
+    m.coluna = coluna;
+    m.maior = maior;
+
+    //chama a função clarear e cria o primeiro arquivo
+    //FUNÇÃO NÃO ESTÁ R
+    clarear(m);
+
 //Liberando espaço alocado para a matriz
         for (i=0; i < linha; i++){
         free (matriz[i]);}
@@ -66,17 +76,6 @@ int main(int argc, char *argv[]){
             free (m.matriz[i]);}
         free(m.matriz);
 
-    fclose(img);
-
-    //Passando os dados pra struct
-    m.linha = linha;
-    m.coluna = coluna;
-    m.maior = maior;
-
-    //chama a função clarear e cria o primeiro arquivo
-    //FUNÇÃO NÃO ESTÁ R
-    //clarear(linha, coluna, maior);
-
     while(getchar() != '\n');
     getchar();
     return 0;
@@ -86,35 +85,27 @@ int main(int argc, char *argv[]){
 
 //-------------------------------------------------//
 //Função para criar o arquivo mais claro
-//ESSA FUNÇÃO NÃO ESTÁ RODANDO
-void clarear(int linha, int coluna, int maior)
+
+void clarear(pgm m)
     {
-    printf("INICIO DA FUNÇÃO,  %d", maior);
+    printf("INICIO DA FUNÇÃO,  %d", m.maior);
 
-    pgm m;
     int i,j;
-    FILE *IMG1 = fopen ("CLAREAR.pgm","a");
-
-    //preencher matriz para testes
+    FILE *IMG1 = fopen ("arquivo1.pgm","w");
 
     //Cria o cabeçalho da primeira imagem alterada
     fprintf(IMG1, "P2");
     fputc('\n', IMG1);
-    fprintf(IMG1, "%d %d", linha, coluna);
+    fprintf(IMG1, "%d %d", m.linha, m.coluna);
     fputc('\n', IMG1);
-    fprintf(IMG1, "%d", maior);
+    fprintf(IMG1, "%d", m.maior);
     fputc('\n', IMG1);
 
     //Coloca a matriz no arquivo criado
     for(i = 0; i < m.linha; i++){
         for(j = 0; j < m.coluna;j++){
-            fprintf(IMG1,"%i ", m.matriz[i][j]);
+            fprintf(IMG1,"%i ", m.matriz[i][j] + 25);
         }
     }
     fclose (IMG1);
 }
-
-
-//------------------------------------------------//
-//Essa função serve apenas para testes
-//preencher uma matriz 512/512 para testes
