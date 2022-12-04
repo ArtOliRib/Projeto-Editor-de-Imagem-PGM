@@ -15,7 +15,7 @@ int main(int argc, char *argv[]){
     setlocale(LC_ALL,"portuguese");
 
     char tipo [3];
-    int linha, coluna, maior, **matriz, i;
+    int linha, coluna, maior, **matriz, i,j;
     pgm m;
 
     //abre o arquivo principal pelo CMD
@@ -32,10 +32,18 @@ int main(int argc, char *argv[]){
             printf("\n");}
 
             matriz = malloc(coluna*sizeof(int *));
+
             for(i = 0; i < coluna; i++){
-                matriz[i] = malloc(coluna*sizeof(int *));
+                matriz[i] = malloc(linha*sizeof(int *));
             }
 
+            for(i = 0;i<linha;i++){
+                for(j=0;i<coluna;j++){
+                    fscanf(img,"%d ",&matriz[i][j]);
+                    printf("%d ",matriz[i][j]);
+                }
+                printf("\n");
+            }
 
 
     fclose(img);
@@ -46,7 +54,7 @@ int main(int argc, char *argv[]){
 
     //chama a função clarear e cria o primeiro arquivo
     //FUNÇÃO NÃO ESTÁ R
-    clarear(linha, coluna, maior);
+    //clarear(linha, coluna, maior);
 
     while(getchar() != '\n');
     getchar();
