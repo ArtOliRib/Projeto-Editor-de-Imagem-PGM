@@ -1,4 +1,4 @@
-#include <stdio.h>
+   #include <stdio.h>
 #include <locale.h>
 #include <stdlib.h>
 
@@ -64,6 +64,7 @@ int main(int argc, char *argv[]){
     //chama a função clarear e cria o primeiro arquivo
     //FUNÇÃO NÃO ESTÁ R
     clarear(m);
+    rotacao(m);
 
 //Liberando espaço alocado para a matriz
         for (i=0; i < linha; i++){
@@ -90,7 +91,7 @@ void clarear(pgm m)
     printf("TESTANDO A FUNÇÃO CLAREAR\n");
 
     int i,j;
-    FILE *IMG1 = fopen ("arquivo1.pgm","w");
+    FILE *IMG1 = fopen ("clarear.pgm","w");
 
     //Cria o cabeçalho da primeira imagem alterada
     fprintf(IMG1, "P2");
@@ -103,9 +104,43 @@ void clarear(pgm m)
     //Coloca a matriz no arquivo criado
     for(i = 0; i < m.linha; i++){
         for(j = 0; j < m.coluna;j++){
-            fprintf(IMG1,"%i ", m.matriz[i][j] + 25);
+            fprintf(IMG1,"%i ", m.matriz[i][j] + 40);
         }
     }
+    if (IMG1 == NULL)
+        printf("Falha ao criar arquivo");
+    else
+        printf("Arquivo criado com sucesso\n");
+    fclose (IMG1);
+}
+
+//-------------------------------------------------//
+//Função para criar o arquivo mais claro
+
+void rotacao(pgm m)
+    {
+    printf("TESTANDO A FUNÇÃO ROTACAO\n");
+
+    int i,j;
+    FILE *IMG1 = fopen ("Rotacao.pgm","w");
+
+    //Cria o cabeçalho da primeira imagem alterada
+    fprintf(IMG1, "P2");
+    fputc('\n', IMG1);
+    fprintf(IMG1, "%d %d", m.linha, m.coluna);
+    fputc('\n', IMG1);
+    fprintf(IMG1, "%d", m.maior);
+    fputc('\n', IMG1);
+
+
+    //Coloca a matriz no arquivo criado
+    for(j = 0; j < m.coluna; j++){
+        {
+            for(i = m.linha-1; i >= 0 ; i--)
+            fprintf(IMG1,"%i ", m.matriz[i][j]);
+        }
+    }
+
     if (IMG1 == NULL)
         printf("Falha ao criar arquivo");
     else
