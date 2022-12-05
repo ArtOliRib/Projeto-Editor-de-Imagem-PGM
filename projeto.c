@@ -67,7 +67,7 @@ fclose(img);
     clarear(m);
     rotacao(m);
     binario(m);
-
+    zoom(m);
 //Liberando espaço alocado para a matriz
         for (i=0; i < linha; i++){
         free (matriz[i]);}
@@ -201,39 +201,41 @@ void binario(pgm m)
 
 void zoom(pgm m)
     {
-    printf("TESTANDO A FUNÇÃO ZOOM\n");
+    printf("\nTESTANDO A FUNÇÃO ZOOM\n");
 
     int i,j,o,y,k;
     int novaLinha,novaColuna;
     int entL = 0, entC = 0, modL = 2, modC = 2;
-    int **matZoom;
 
     FILE *IMG1 = fopen ("Zoom.pgm","w");
 
     //novos parametros da matriz
     novaLinha = m.linha / 2;
     novaColuna = m.coluna / 2;
+    int matZoom[novaLinha][novaColuna];
 
     //nova matriz dinamica
-    matZoom = malloc(novaLinha*sizeof(int *));
+    //matZoom = malloc(novaLinha*sizeof(int *));
 
-    for(i = 0; i < novaLinha; i++){
+    /*for(i = 0; i < novaLinha; i++){
             matZoom[i] = malloc(novaColuna*sizeof(int *));
-    }
+    }*/
 
     for(i = 0; i < novaLinha;i++){
         for(j = 0; j < novaColuna;j++){
-            for(y = entL;y < modL; y++){
+            for(y = entL;y< modL; y++){
                 for(o = entC;o < modC;o++){
                     matZoom[i][j] = matZoom[i][j] + m.matriz[y][o];
+                    //printf("%i ",matZoom[i][j]);
                 }
             }
+            }
             matZoom[i][j] = matZoom[i][j] / 4;
+            //printf("%i ",matZoom[i][j]);
             entL = entL + 2;
             entC = entC +2;
             modL = entL +2;
             modC = modC +2;
-            }
         }
 
     //Cria o cabeçalho da primeira imagem alterada
