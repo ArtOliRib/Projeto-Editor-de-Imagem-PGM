@@ -156,7 +156,7 @@ void binario(pgm m)
 
     printf("TESTANDO A FUNÇÃO BINARIA\n");
     printf("%d %d\n", m.linha, m.coluna);
-    
+
     int i,j;
     int matrizbinaria [m.linha][m.coluna];
 
@@ -195,6 +195,64 @@ void binario(pgm m)
     else
         printf("Arquivo criado com sucesso");
 
-    fclose (IMG1);        
+    fclose (IMG1);
 
+}
+
+void zoom(pgm m)
+    {
+    printf("TESTANDO A FUNÇÃO ZOOM\n");
+
+    int i,j,o,y,k;
+    int novaLinha,novaColuna;
+    int entL = 0, entC = 0, modL = 2, modC = 2;
+    int **matZoom;
+
+    FILE *IMG1 = fopen ("Zoom.pgm","w");
+
+    //novos parametros da matriz
+    novaLinha = m.linha / 2;
+    novaColuna = m.coluna / 2;
+
+    //nova matriz dinamica
+    matZoom = malloc(novaLinha*sizeof(int *));
+
+    for(i = 0; i < novaLinha; i++){
+            matZoom[i] = malloc(novaColuna*sizeof(int *));
+    }
+
+    for(i = 0; i < novaLinha;i++){
+        for(j = 0; j < novaColuna;j++){
+            for(y = entL;y < modL; y++){
+                for(o = entC;o < modC;o++){
+                    matZoom[i][j] = matZoom[i][j] + m.matriz[y][o];
+                }
+            }
+            matZoom[i][j] = matZoom[i][j] / 4;
+            entL = entL + 2;
+            entC = entC +2;
+            modL = entL +2;
+            modC = modC +2;
+            }
+        }
+
+    //Cria o cabeçalho da primeira imagem alterada
+    fprintf(IMG1, "P2");
+    fputc('\n', IMG1);
+    fprintf(IMG1, "%d %d", novaLinha, novaColuna);
+    fputc('\n', IMG1);
+    fprintf(IMG1, "%d", m.maior);
+    fputc('\n', IMG1);
+
+    //Coloca a matriz no arquivo criado
+    for(i = 0; i < novaLinha; i++){
+        for(j = 0; j < novaColuna;j++){
+            fprintf(IMG1,"%i ", matZoom[i][j]);
+        }
+    }
+    if (IMG1 == NULL)
+        printf("Falha ao criar arquivo");
+    else
+        printf("Arquivo criado com sucesso\n");
+    fclose (IMG1);
 }
