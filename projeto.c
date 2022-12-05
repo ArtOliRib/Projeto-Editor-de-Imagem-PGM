@@ -10,7 +10,7 @@ typedef struct{
 } pgm;
 
 //-------------------------------------------------//
-
+//Função principal
 int main(int argc, char *argv[]){
     setlocale(LC_ALL,"portuguese");
 
@@ -43,6 +43,7 @@ int main(int argc, char *argv[]){
                     fscanf(img,"%i",&matriz[i][j]);
                 }
             }
+
 //Alocação dinâmica para a matriz da struct
 //Quando a matriz estiver correta, passar da matriz da main para a struct
         m.matriz = malloc(linha*sizeof(int *));
@@ -54,7 +55,7 @@ int main(int argc, char *argv[]){
         for(j=0;j<coluna;j++)
             m.matriz[i][j] = matriz[i][j];
 
-    fclose(img);
+fclose(img);
 
     //Passando os dados pra struct
     m.linha = linha;
@@ -65,6 +66,7 @@ int main(int argc, char *argv[]){
     //FUNÇÃO NÃO ESTÁ R
     clarear(m);
     rotacao(m);
+    binario(m);
 
 //Liberando espaço alocado para a matriz
         for (i=0; i < linha; i++){
@@ -82,10 +84,8 @@ int main(int argc, char *argv[]){
 
 }
 
-
 //-------------------------------------------------//
 //Função para criar o arquivo mais claro
-
 void clarear(pgm m)
     {
     printf("TESTANDO A FUNÇÃO CLAREAR\n");
@@ -110,13 +110,11 @@ void clarear(pgm m)
     if (IMG1 == NULL)
         printf("Falha ao criar arquivo");
     else
-        printf("Arquivo criado com sucesso\n");
+        printf("Arquivo criado com sucesso\n\n");
     fclose (IMG1);
 }
-
 //-------------------------------------------------//
-//Função para criar o arquivo mais claro
-
+//Função para rotacinar a imagem
 void rotacao(pgm m)
     {
     printf("TESTANDO A FUNÇÃO ROTACAO\n");
@@ -144,6 +142,59 @@ void rotacao(pgm m)
     if (IMG1 == NULL)
         printf("Falha ao criar arquivo");
     else
-        printf("Arquivo criado com sucesso");
+        printf("Arquivo criado com sucesso\n\n");
     fclose (IMG1);
+}
+
+
+
+
+//-------------------------------------------------//
+//Binarizar arquivo
+void binario(pgm m)
+    {
+
+    printf("TESTANDO A FUNÇÃO BINARIA\n");
+    printf("%d %d\n", m.linha, m.coluna);
+    
+    int i,j;
+    int matrizbinaria [m.linha][m.coluna];
+
+    printf("%d %d\n", m.linha, m.coluna);
+
+    /// Atribuindo os 1 e 0 para a nova matriz
+
+    for(i=0; i<m.linha; i++) {
+        for(j=0; j<m.coluna; j++){
+            if (m.matriz[i][j] < 127){
+                matrizbinaria[i][j] = 1;}
+            else {
+                matrizbinaria [i][j] = 0;}}}
+
+    FILE *IMG1 = fopen ("binario.pgm","w");
+
+    //Cria o cabeçalho da primeira imagem alterada
+    fprintf(IMG1, "P2");
+    fputc('\n', IMG1);
+
+    fprintf(IMG1, "%d %d", m.linha, m.coluna);
+    fputc('\n', IMG1);
+
+    fprintf(IMG1, "%d", 1);
+    fputc('\n', IMG1);
+
+    //Coloca a matriz no arquivo criado
+   for(i = 0; i < m.linha; i++){
+        for(j = 0; j < m.coluna;j++){
+            fprintf(IMG1,"%i ", matrizbinaria[i][j]);
+        }
+    }
+
+    if (IMG1 == NULL)
+        printf("Falha ao criar arquivo");
+    else
+        printf("Arquivo criado com sucesso");
+
+    fclose (IMG1);        
+
 }
