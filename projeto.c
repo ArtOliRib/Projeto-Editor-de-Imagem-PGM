@@ -1,6 +1,7 @@
-   #include <stdio.h>
+#include <stdio.h>
 #include <locale.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct{
     int linha;
@@ -44,8 +45,37 @@ int main(int argc, char *argv[]){
             }
         }
 
+
+    char nome[260];
+    char nometemp[260]; //Arquivo (sem o .pgm)
+    char nomearq1[260]; //Arquivo Clarear
+    char nomearq2[260]; //Arquivo Zoom
+    char nomearq3[260]; //Arquivo Binario
+    char nomearq4[260]; //Arquivo Rotação
+
+    //Copiar o nome da string
+    strcpy(nome, argv[1]);
+
+    int qtd = strlen(nome);
+
+    //Copia tudo antes do .pgm e fecha a string com \0
+    for (i=0; i <= qtd-5; i++)
+        nometemp[i] = nome[i];
+    nometemp[i] = '\0';
+
+    strcpy(nomearq1, nometemp);
+    strcat(nomearq1, "1.pgm");
+
+    strcpy(nomearq2, nometemp);
+    strcat(nomearq2, "2.pgm");
+
+    strcpy(nomearq3, nometemp);
+    strcat(nomearq3, "3.pgm");
+
+    strcpy(nomearq4, nometemp);
+    strcat(nomearq4, "4.pgm");   
+
 //Alocação dinâmica para a matriz da struct
-//Quando a matriz estiver correta, passar da matriz da main para a struct
         m.matriz = malloc(linha*sizeof(int *));
         for (i=0; i<linha; i++){
         m.matriz[i] = malloc(coluna*sizeof(int));}
@@ -64,10 +94,11 @@ fclose(img);
 
     //chama a função clarear e cria o primeiro arquivo
     //FUNÇÃO NÃO ESTÁ R
-    clarear(m);
-    rotacao(m);
-    binario(m);
-    zoom(m);
+    clarear(m, nomearq1);
+    zoom(m, nomearq2);
+    binario(m, nomearq3);
+    rotacao(m, nomearq4);
+
 //Liberando espaço alocado para a matriz
         for (i=0; i < linha; i++){
         free (matriz[i]);}
@@ -78,20 +109,16 @@ fclose(img);
             free (m.matriz[i]);}
         free(m.matriz);
 
-    while(getchar() != '\n');
-    getchar();
-    return 0;
-
+return 0;
 }
 
-//-------------------------------------------------//
 //Função para criar o arquivo mais claro
-void clarear(pgm m)
+void clarear(pgm m, char* nomearq[])
     {
     printf("Clareando a imagem\n");
 
     int i,j;
-    FILE *IMG1 = fopen ("clarear.pgm","w");
+    FILE *IMG1 = fopen (nomearq,"w");
 
     //Cria o cabeçalho da primeira imagem alterada
     fprintf(IMG1, "P2");
@@ -114,17 +141,17 @@ void clarear(pgm m)
     if (IMG1 == NULL)
         printf("Falha ao criar arquivo");
     else
-        printf("Arquivo criado com sucesso\n\n");
+        printf("Arquivo %s criado.\n\n", nomearq);
     fclose (IMG1);
 }
-//-------------------------------------------------//
-//Função para rotacinar a imagem
-void rotacao(pgm m)
+
+//Função para rotacionar a imagem
+void rotacao(pgm m, char* nomearq[])
     {
     printf("Girando a imagem 90º no sentido horário\n");
 
     int i,j;
-    FILE *IMG1 = fopen ("Rotacao.pgm","w");
+    FILE *IMG1 = fopen (nomearq,"w");
 
     //Cria o cabeçalho da primeira imagem alterada
     fprintf(IMG1, "P2");
@@ -146,16 +173,12 @@ void rotacao(pgm m)
     if (IMG1 == NULL)
         printf("Falha ao criar arquivo.");
     else
-        printf("Arquivo criado com sucesso\n\n");
+        printf("Arquivo %s criado.\n\n", nomearq);
     fclose (IMG1);
 }
 
-
-
-
-//-------------------------------------------------//
 //Binarizar arquivo
-void binario(pgm m)
+void binario(pgm m, char* nomearq[])
     {
 
     printf("Binarizando a imagem\n");
@@ -172,7 +195,7 @@ void binario(pgm m)
             else {
                 matrizbinaria [i][j] = 0;}}}
 
-    FILE *IMG1 = fopen ("binario.pgm","w");
+    FILE *IMG1 = fopen (nomearq,"w");
 
     //Cria o cabeçalho da primeira imagem alterada
     fprintf(IMG1, "P2");
@@ -194,21 +217,22 @@ void binario(pgm m)
     if (IMG1 == NULL)
         printf("Falha ao criar arquivo");
     else
-        printf("Arquivo criado com sucesso\n");
+        printf("Arquivo %s criado.\n\n", nomearq);
 
     fclose (IMG1);
 
 }
 
-void zoom(pgm m)
+//Função Zoom
+void zoom(pgm m, char* nomearq[])
     {
-    printf("\nZoom\nFalta implementar\n");
+    printf("Zoom\nFalta implementar\n");
 
     int i,j,o,y,k;
     int novaLinha,novaColuna;
     int entL = 0, entC = 0, modL = 2, modC = 2;
 
-    FILE *IMG1 = fopen ("Zoom.pgm","w");
+    FILE *IMG1 = fopen (nomearq,"w");
 
     //novos parametros da matriz
     novaLinha = m.linha / 2;
@@ -256,6 +280,6 @@ void zoom(pgm m)
     if (IMG1 == NULL)
         printf("Falha ao criar arquivo");
     else
-        printf("Arquivo criado com sucesso\n");
+        printf("Arquivo %s criado.\n\n", nomearq);
     fclose (IMG1);
 }
