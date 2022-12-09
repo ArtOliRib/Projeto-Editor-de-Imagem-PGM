@@ -243,9 +243,7 @@ void zoom(pgm m, char* nomearq[])
     for(i  = 0; i < m.linha;i++){
         d = 0;
         for(j = 0; j < m.coluna;j++){
-
                 matZoom[c][d] = (m.matriz[i][j] + m.matriz[i+1][j] + m.matriz[i][j + 1] + m.matriz[i + 1][j + 1])/4;
-
                 d++;
                 j++;
         }
