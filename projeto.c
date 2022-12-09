@@ -73,7 +73,7 @@ int main(int argc, char *argv[]){
     strcat(nomearq3, "3.pgm");
 
     strcpy(nomearq4, nometemp);
-    strcat(nomearq4, "4.pgm");   
+    strcat(nomearq4, "4.pgm");
 
 //Alocação dinâmica para a matriz da struct
         m.matriz = malloc(linha*sizeof(int *));
@@ -87,13 +87,12 @@ int main(int argc, char *argv[]){
 
 fclose(img);
 
-    //Passando os dados pra struct
+    //Passando os dados pra struct.
     m.linha = linha;
     m.coluna = coluna;
     m.maior = maior;
 
-    //chama a função clarear e cria o primeiro arquivo
-    //FUNÇÃO NÃO ESTÁ R
+    //chama todas as funçoes.
     clarear(m, nomearq1);
     zoom(m, nomearq2);
     binario(m, nomearq3);
@@ -226,49 +225,50 @@ void binario(pgm m, char* nomearq[])
 //Função Zoom
 void zoom(pgm m, char* nomearq[])
     {
-    printf("Zoom\nFalta implementar\n");
+    printf("Diminuindo a imagem\n");
+    int i,j,c,d,k;
+    int novaLinha,novaColuna,novoMaior;
 
-    int i,j,o,y,k;
-    int novaLinha,novaColuna;
-    int entL = 0, entC = 0, modL = 2, modC = 2;
 
-    FILE *IMG1 = fopen (nomearq,"w");
+    FILE *IMG1 = fopen(nomearq,"w");
 
     //novos parametros da matriz
     novaLinha = m.linha / 2;
     novaColuna = m.coluna / 2;
+
     int matZoom[novaLinha][novaColuna];
 
-    //nova matriz dinamica
-    //matZoom = malloc(novaLinha*sizeof(int *));
+    //Calculo dos pixels redimencionados para a nova matriz.
+    c = 0;
+    for(i  = 0; i < m.linha;i++){
+        d = 0;
+        for(j = 0; j < m.coluna;j++){
 
-    /*for(i = 0; i < novaLinha; i++){
-            matZoom[i] = malloc(novaColuna*sizeof(int *));
-    }*/
+                matZoom[c][d] = (m.matriz[i][j] + m.matriz[i+1][j] + m.matriz[i][j + 1] + m.matriz[i + 1][j + 1])/4;
 
-    for(i = 0; i < novaLinha;i++){
-        for(j = 0; j < novaColuna;j++){
-            for(y = entL;y< modL; y++){
-                for(o = entC;o < modC;o++){
-                    matZoom[i][j] = matZoom[i][j] + m.matriz[y][o];
-                    //printf("%i ",matZoom[i][j]);
-                }
-            }
-            }
-            matZoom[i][j] = matZoom[i][j] / 4;
-            //printf("%i ",matZoom[i][j]);
-            entL = entL + 2;
-            entC = entC +2;
-            modL = entL +2;
-            modC = modC +2;
+                d++;
+                j++;
         }
+        c++;
+        i++;
+    }
+
+    //calculo do maior pixel da nova matriz.
+    novoMaior = matZoom[0][0];
+    for(i = 0; i < novaLinha;i++){
+        for(j = 0; j < novaColuna; j++){
+            if (matZoom[i][j] > novoMaior){
+                novoMaior = matZoom[i][j];
+            }
+        }
+    }
 
     //Cria o cabeçalho da primeira imagem alterada
     fprintf(IMG1, "P2");
     fputc('\n', IMG1);
     fprintf(IMG1, "%d %d", novaLinha, novaColuna);
     fputc('\n', IMG1);
-    fprintf(IMG1, "%d", m.maior);
+    fprintf(IMG1, "%d", novoMaior);
     fputc('\n', IMG1);
 
     //Coloca a matriz no arquivo criado
