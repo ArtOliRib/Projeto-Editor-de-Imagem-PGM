@@ -1,3 +1,3 @@
-PROJETO FINAL DE IP
+PROJETO FINAL DA CADEIRA DE INTRODUÇÃO A PROGRAMAÇÃO DA UFPB 
 
-atividade: passar os dados de um arquivo para uma struct e fazer diversas altera��es.
+ATIVIDADE: Criar um programa que receba uma imagem PGM atraves do CMD e retorne 4 novas imagens variantes da original.
